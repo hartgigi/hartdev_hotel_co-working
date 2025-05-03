@@ -6,7 +6,7 @@ import com.phegondev.PhegonHotel.entity.Room;
 import com.phegondev.PhegonHotel.exception.OurException;
 import com.phegondev.PhegonHotel.repo.BookingRepository;
 import com.phegondev.PhegonHotel.repo.RoomRepository;
-import com.phegondev.PhegonHotel.service.AwsS3Service;
+import com.phegondev.PhegonHotel.service.LocalFileStorageService;
 import com.phegondev.PhegonHotel.service.interfac.IRoomService;
 import com.phegondev.PhegonHotel.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +27,14 @@ public class RoomService implements IRoomService {
     @Autowired
     private BookingRepository bookingRepository;
     @Autowired
-    private AwsS3Service awsS3Service;
+    private LocalFileStorageService fileStorageService;
 
     @Override
     public Response addNewRoom(MultipartFile photo, String roomType, BigDecimal roomPrice, String description) {
         Response response = new Response();
 
         try {
-            String imageUrl = awsS3Service.saveImageToS3(photo);
+            String imageUrl = fileStorageService.saveImageToLocal(photo);
             Room room = new Room();
             room.setRoomPhotoUrl(imageUrl);
             room.setRoomType(roomType);
@@ -81,7 +81,14 @@ public class RoomService implements IRoomService {
         Response response = new Response();
 
         try {
-            roomRepository.findById(roomId).orElseThrow(() -> new OurException("Room Not Found"));
+            Room room = roomRepository.findById(roomId).orElseThrow(() -> new OurException("Room Not Found"));
+            
+            // ลบรูปภาพก่อนลบข้อมูลห้อง
+            String imageUrl = room.getRoomPhotoUrl();
+            if (imageUrl != null && !imageUrl.isEmpty()) {
+                fileStorageService.deleteImage(imageUrl);
+            }
+            
             roomRepository.deleteById(roomId);
             response.setStatusCode(200);
             response.setMessage("successful");
@@ -91,7 +98,7 @@ public class RoomService implements IRoomService {
             response.setMessage(e.getMessage());
         } catch (Exception e) {
             response.setStatusCode(500);
-            response.setMessage("Error saving a room " + e.getMessage());
+            response.setMessage("Error deleting room: " + e.getMessage());
         }
         return response;
     }
@@ -101,15 +108,26 @@ public class RoomService implements IRoomService {
         Response response = new Response();
 
         try {
+            Room room = roomRepository.findById(roomId).orElseThrow(() -> new OurException("Room Not Found"));
+            
+            // เก็บ URL รูปภาพเก่าเพื่อลบภายหลัง
+            String oldImageUrl = room.getRoomPhotoUrl();
+            
             String imageUrl = null;
             if (photo != null && !photo.isEmpty()) {
-                imageUrl = awsS3Service.saveImageToS3(photo);
+                // บันทึกรูปภาพใหม่
+                imageUrl = fileStorageService.saveImageToLocal(photo);
+                room.setRoomPhotoUrl(imageUrl);
+                
+                // ลบรูปภาพเก่าหลังจากบันทึกรูปใหม่เรียบร้อยแล้ว
+                if (oldImageUrl != null && !oldImageUrl.isEmpty()) {
+                    fileStorageService.deleteImage(oldImageUrl);
+                }
             }
-            Room room = roomRepository.findById(roomId).orElseThrow(() -> new OurException("Room Not Found"));
+            
             if (roomType != null) room.setRoomType(roomType);
             if (roomPrice != null) room.setRoomPrice(roomPrice);
             if (description != null) room.setRoomDescription(description);
-            if (imageUrl != null) room.setRoomPhotoUrl(imageUrl);
 
             Room updatedRoom = roomRepository.save(room);
             RoomDTO roomDTO = Utils.mapRoomEntityToRoomDTO(updatedRoom);
@@ -123,7 +141,7 @@ public class RoomService implements IRoomService {
             response.setMessage(e.getMessage());
         } catch (Exception e) {
             response.setStatusCode(500);
-            response.setMessage("Error saving a room " + e.getMessage());
+            response.setMessage("Error updating room: " + e.getMessage());
         }
         return response;
     }
