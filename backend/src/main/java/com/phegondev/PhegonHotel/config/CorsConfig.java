@@ -15,6 +15,7 @@ public class CorsConfig {
         
         // อนุญาตให้ frontend ที่รันบน localhost ทุกพอร์ตเข้าถึงได้
         config.addAllowedOrigin("http://localhost:7070");
+        config.addAllowedOrigin("http://localhost:7071");
         config.addAllowedOrigin("http://localhost:3000");
         
         // อนุญาตให้ใช้ header ต่างๆ
