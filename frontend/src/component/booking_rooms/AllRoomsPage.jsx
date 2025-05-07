@@ -70,18 +70,42 @@ const AllRoomsPage = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className='all-rooms'>
-      <h2>All Rooms</h2>
-      <div className='all-room-filter-div'>
-        <label>Filter by Room Type:</label>
-        <select value={selectedRoomType} onChange={handleRoomTypeChange}>
-          <option value="">All</option>
-          {roomTypes.map((type) => (
-            <option key={type} value={type}>
-              {type}
-            </option>
-          ))}
-        </select>
+    <div className='container-custom py-16 max-w-5xl mx-auto text-white'>
+      <div className="text-center mb-10">
+        <div className="inline-block mb-2">
+          <div className="h-px w-12 bg-gold-400 mx-auto"></div>
+        </div>
+        <h2 className="text-3xl font-display font-semibold text-white">All Rooms</h2>
+        <p className="text-white/70 mt-2 font-body">Browse our luxury accommodations</p>
+      </div>
+      
+      <div className="bg-charcoal-900 border border-gold-400/20 shadow-elegant p-8 mb-8">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="w-full md:w-auto">
+            <label className="text-gold-400 text-sm font-medium uppercase tracking-wider block mb-2">
+              Filter by Room Type
+            </label>
+            <div className="relative inline-block w-full md:w-64">
+              <select 
+                value={selectedRoomType} 
+                onChange={handleRoomTypeChange}
+                className="appearance-none w-full bg-charcoal-800 border-0 border-b border-gold-400/30 focus:border-gold-400 px-3 py-2 text-white pr-8 focus:ring-0"
+              >
+                <option value="">All Room Types</option>
+                {roomTypes.map((type) => (
+                  <option key={type} value={type}>
+                    {type}
+                  </option>
+                ))}
+              </select>
+              <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-gold-400">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       
       <RoomSearch handleSearchResult={handleSearchResult} />

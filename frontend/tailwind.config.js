@@ -1,0 +1,78 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          50: '#f7f7f8',
+          100: '#efeef0',
+          200: '#dbd8e0',
+          300: '#bfb9c7',
+          400: '#9e95a9',
+          500: '#7c7490',
+          600: '#635c77',
+          700: '#514a61',
+          800: '#433e4f',
+          900: '#2c2936',
+          950: '#1a1921',
+        },
+        secondary: {
+          50: '#f9f7f2',
+          100: '#f3ede0',
+          200: '#e7d9be',
+          300: '#d8bd92',
+          400: '#c9a06a',
+          500: '#bb864d',
+          600: '#a56e40',
+          700: '#8a5736',
+          800: '#6f4631',
+          900: '#5b3a2b',
+          950: '#311e16',
+        },
+        gold: {
+          50: '#fbf8f1',
+          100: '#f7f0df',
+          200: '#efe1be',
+          300: '#e3ca90',
+          400: '#d9b16a',
+          500: '#cc954a',
+          600: '#be7f3e',
+          700: '#9e6634',
+          800: '#805132',
+          900: '#69422d',
+          950: '#382214',
+        },
+        charcoal: {
+          50: '#f6f6f7',
+          100: '#e1e1e6',
+          200: '#c2c2ca',
+          300: '#9c9caa',
+          400: '#7a7a8c',
+          500: '#636375',
+          600: '#4f4f61',
+          700: '#41414f',
+          800: '#383843',
+          900: '#303037',
+          950: '#1a1a1f',
+        },
+      },
+      fontFamily: {
+        sans: ['Playfair Display', 'serif'],
+        display: ['Playfair Display', 'serif'],
+        body: ['Cormorant Garamond', 'serif'],
+      },
+      boxShadow: {
+        soft: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+        elegant: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+        golden: '0 4px 12px rgba(209, 173, 96, 0.25)',
+      },
+      borderColor: {
+        golden: 'rgba(209, 173, 96, 0.3)',
+      },
+    },
+  },
+  plugins: [],
+} 

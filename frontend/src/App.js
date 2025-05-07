@@ -1,5 +1,3 @@
-
-
 // src/App.js
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
@@ -24,9 +22,9 @@ import { ProtectedRoute, AdminRoute } from './service/guard';
 function App() {
   return (
     <BrowserRouter>
-      <div className="App">
+      <div className="flex flex-col min-h-screen bg-charcoal-950">
         <Navbar />
-        <div className="content">
+        <main className="flex-grow">
           <Routes>
             {/* Public Routes */}
             <Route exact path="/home" element={<HomePage />} />
@@ -69,7 +67,7 @@ function App() {
             {/* Fallback Route */}
             <Route path="*" element={<Navigate to="/login" />} />
           </Routes>
-        </div>
+        </main>
         <FooterComponent />
       </div>
     </BrowserRouter>

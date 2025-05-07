@@ -1,3 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Cormorant Garamond', serif;
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-charcoal-50 text-charcoal-800;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+
+  h1 {
+    @apply text-4xl font-bold mb-4;
+  }
+
+  h2 {
+    @apply text-3xl font-semibold mb-3;
+  }
+
+  h3 {
+    @apply text-2xl font-medium mb-2;
+  }
+
+  h4 {
+    @apply text-xl font-medium mb-2;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-sm font-medium transition-colors duration-300;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary-800 text-white hover:bg-primary-900 shadow-elegant;
+  }
+
+  .btn-secondary {
+    @apply btn bg-gold-400 text-charcoal-900 hover:bg-gold-500 shadow-golden;
+  }
+
+  .btn-outline {
+    @apply btn border border-charcoal-200 bg-white text-charcoal-800 hover:bg-charcoal-50 hover:border-gold-300;
+  }
+
+  .btn-golden {
+    @apply btn bg-gold-400 text-charcoal-950 hover:bg-gold-500 shadow-golden;
+  }
+
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .form-input {
+    @apply w-full rounded-sm border border-charcoal-200 px-3 py-2 shadow-sm focus:border-gold-300 focus:ring-1 focus:ring-gold-300;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-charcoal-800 mb-1;
+  }
+
+  .card {
+    @apply bg-white rounded-sm shadow-elegant p-5 transition-shadow duration-300 hover:shadow-md border border-charcoal-100;
+  }
+
+  .card-luxury {
+    @apply bg-white rounded-sm shadow-elegant p-5 transition-all duration-300 hover:shadow-golden border border-golden;
+  }
+}
+
 * {
     margin: 0;
     font-family: Arial, sans-serif;

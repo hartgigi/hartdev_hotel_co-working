@@ -4,6 +4,9 @@ import ApiService from "../../service/ApiService"; // Assuming your service is i
 import DatePicker from "react-datepicker";
 // import 'react-datepicker/dist/react-datepicker.css';
 
+// Conversion rate from USD to THB (Thai Baht)
+const USD_TO_THB_RATE = 35;
+
 const RoomDetailsPage = () => {
   const navigate = useNavigate(); // Access the navigate function to navigate
   const { roomId } = useParams(); // Get room ID from URL parameters
@@ -21,6 +24,11 @@ const RoomDetailsPage = () => {
   const [showMessage, setShowMessage] = useState(false); // State variable to control message visibility
   const [confirmationCode, setConfirmationCode] = useState(""); // State variable for booking confirmation code
   const [errorMessage, setErrorMessage] = useState(""); // State variable for error message
+
+  // Function to convert USD to THB
+  const convertToTHB = (usdAmount) => {
+    return (usdAmount * USD_TO_THB_RATE).toFixed(0);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -162,7 +170,7 @@ const RoomDetailsPage = () => {
       />
       <div className="room-details-info">
         <h3>{roomType}</h3>
-        <p>Price: ${roomPrice} / night</p>
+        <p>Price: ฿{convertToTHB(roomPrice)} / night</p>
         <p>{description}</p>
       </div>
       {bookings && bookings.length > 0 && (
@@ -252,7 +260,7 @@ const RoomDetailsPage = () => {
         )}
         {totalPrice > 0 && (
           <div className="total-price">
-            <p>Total Price: ${totalPrice}</p>
+            <p>Total Price: ฿{convertToTHB(totalPrice)}</p>
             <p>Total Guests: {totalGuests}</p>
             <button onClick={acceptBooking} className="accept-booking">
               Accept Booking
