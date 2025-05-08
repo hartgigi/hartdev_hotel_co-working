@@ -18,22 +18,22 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // รหัสผู้ใช้
 
     @NotBlank(message = "Email is required")
     @Column(unique = true)
-    private String email;
+    private String email; // อีเมลผู้ใช้
 
     @NotBlank(message = "Name is required")
-    private String name;
+    private String name; // ชื่อผู้ใช้
 
     @NotBlank(message = "Phone Number is required")
-    private String phoneNumber;
+    private String phoneNumber; // เบอร์โทรศัพท์
 
     @NotBlank(message = "Password is required")
-    private String password;
+    private String password; // รหัสผ่าน
 
-    private String role;
+    private String role; // บทบาทผู้ใช้ (ADMIN หรือ USER)
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Booking> bookings = new ArrayList<>();

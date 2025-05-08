@@ -30,10 +30,8 @@ public class BookingService implements IBookingService {
     @Autowired
     private UserRepository userRepository;
 
-
     @Override
     public Response saveBooking(Long roomId, Long userId, Booking bookingRequest) {
-
         Response response = new Response();
 
         try {
@@ -69,7 +67,6 @@ public class BookingService implements IBookingService {
         }
         return response;
     }
-
 
     @Override
     public Response findBookingByConfirmationCode(String confirmationCode) {
@@ -141,7 +138,6 @@ public class BookingService implements IBookingService {
         }
         return response;
     }
-
 
     private boolean roomIsAvailable(Booking bookingRequest, List<Booking> existingBookings) {
 

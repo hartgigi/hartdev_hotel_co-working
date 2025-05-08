@@ -8,8 +8,8 @@ const FooterComponent = () => {
                 <div className="flex justify-center mb-10">
                     <div className="text-center">
                         <h2 className="font-display text-3xl italic font-bold text-white mb-2">
-                            <span className="text-gold-400">P</span>hegon
-                            <span className="text-gold-400 ml-2">H</span>otel
+                            <span className="text-gold-400">H</span>art
+                            <span className="text-gold-400 ml-2">H</span>otel And Co-working
                         </h2>
                         <div className="h-px w-24 bg-gold-400 mx-auto my-4"></div>
                         <p className="text-white/70 text-sm tracking-wider uppercase">Luxury & Comfort</p>
@@ -69,7 +69,7 @@ const FooterComponent = () => {
                                 <a href="tel:+66123456789" className="hover:text-gold-400 transition-colors">+66 12 345 6789</a>
                             </p>
                             <p>
-                                <a href="mailto:reservations@phegonhotel.com" className="hover:text-gold-400 transition-colors">reservations@phegonhotel.com</a>
+                                <a href="mailto:reservations@hart-hotel.com" className="hover:text-gold-400 transition-colors">reservations@hart-hotel.com</a>
                             </p>
                         </address>
                     </div>
@@ -78,7 +78,7 @@ const FooterComponent = () => {
                 <div className="border-t border-white/10 mt-10 pt-8 text-center">
                     <div className="flex flex-col md:flex-row justify-between items-center">
                         <p className="text-white/50 text-sm">
-                            &copy; {new Date().getFullYear()} Phegon Hotel. All Rights Reserved.
+                            &copy; {new Date().getFullYear()} Hart Hotel And Co-working. All Rights Reserved.
                         </p>
                         <div className="flex space-x-4 mt-4 md:mt-0">
                             <a href="#" className="text-white/50 text-sm hover:text-gold-400 transition-colors">Privacy Policy</a>

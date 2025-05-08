@@ -19,17 +19,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+// คลาสที่กำหนดการตั้งค่าความปลอดภัยของระบบ
 @Configuration
 @EnableMethodSecurity
 @EnableWebSecurity
 public class SecurityConfig {
-
 
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
     @Autowired
     private JWTAuthFilter jwtAuthFilter;
 
+    // กำหนดการตั้งค่าความปลอดภัยหลัก
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
@@ -44,6 +45,7 @@ public class SecurityConfig {
         return httpSecurity.build();
     }
 
+    // กำหนดการยืนยันตัวตน
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
@@ -52,11 +54,13 @@ public class SecurityConfig {
         return daoAuthenticationProvider;
     }
 
+    // กำหนดการเข้ารหัสรหัสผ่าน
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    // กำหนดการจัดการการยืนยันตัวตน
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();

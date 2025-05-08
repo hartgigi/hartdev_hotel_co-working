@@ -71,12 +71,12 @@ const RoomDetailsPage = () => {
     const oneDay = 24 * 60 * 60 * 1000; // hours * minutes * seconds * milliseconds
     const startDate = new Date(checkInDate);
     const endDate = new Date(checkOutDate);
-    const totalDays = Math.round(Math.abs((endDate - startDate) / oneDay)) + 1;
+    const totalDays = Math.round(Math.abs((endDate - startDate) / oneDay));
 
     // Calculate total number of guests
     const totalGuests = numAdults + numChildren;
 
-    // Calculate total price
+    // Calculate total price based on the number of days
     const roomPricePerNight = roomDetails.roomPrice;
     const totalPrice = roomPricePerNight * totalDays;
 
@@ -153,105 +153,107 @@ const RoomDetailsPage = () => {
     roomDetails;
 
   return (
-    <div className="room-details-booking">
+    <div className="room-details-booking w-full min-h-screen flex flex-col items-center justify-center bg-charcoal-950">
       {showMessage && (
-        <p className="booking-success-message">
+        <p className="booking-success-message text-center mx-auto">
           Booking successful! Confirmation code: {confirmationCode}. An SMS and
           email of your booking details have been sent to you.
         </p>
       )}
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
-      <h2>Room Details</h2>
-      <br />
+      {errorMessage && <p className="error-message text-center mx-auto">{errorMessage}</p>}
+      <h2 className="text-3xl font-display font-bold text-gold-400 mb-6 flex items-center gap-2 justify-center mx-auto">
+        Room Details
+        <svg className="h-7 w-7 text-gold-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01" /></svg>
+      </h2>
       <img
         src={ApiService.getImageUrl(roomPhotoUrl)}
         alt={roomType}
-        className="room-details-image"
+        className="room-details-image rounded shadow-elegant mb-6 mx-auto"
       />
-      <div className="room-details-info">
-        <h3>{roomType}</h3>
-        <p>Price: ฿{convertToTHB(roomPrice)} / night</p>
-        <p>{description}</p>
+      <div className="room-details-info mb-8 text-center mx-auto">
+        <h3 className="text-2xl font-display text-white mb-1">{roomType}</h3>
+        <p className="text-gold-400 font-semibold">Price: ฿{convertToTHB(roomPrice)} / night</p>
+        <p className="text-white/70 mt-2">{description}</p>
       </div>
       {bookings && bookings.length > 0 && (
-        <div>
-          <h3>Existing Booking Details</h3>
+        <div className="mb-8 mx-auto">
+          <h3 className="text-xl font-bold text-gold-400 mb-2 text-center">Existing Booking Details</h3>
           <ul className="booking-list">
             {bookings.map((booking, index) => (
-              <li key={booking.id} className="booking-item">
-                <span className="booking-number">Booking {index + 1} </span>
-                <span className="booking-text">
-                  Check-in: {booking.checkInDate}{" "}
-                </span>
-                <span className="booking-text">
-                  Out: {booking.checkOutDate}
-                </span>
+              <li key={booking.id} className="booking-item text-white/80 text-center">
+                <span className="booking-number text-gold-400 font-medium">Booking {index + 1} </span>
+                <span className="booking-text">Check-in: {booking.checkInDate} </span>
+                <span className="booking-text">Out: {booking.checkOutDate}</span>
               </li>
             ))}
           </ul>
         </div>
       )}
-      <div className="booking-info">
-        <button
-          className="book-now-button"
-          onClick={() => setShowDatePicker(true)}
-        >
-          Book Now
-        </button>
-        <button
-          className="go-back-button"
-          onClick={() => setShowDatePicker(false)}
-        >
-          Go Back
-        </button>
+      <div className="booking-info flex flex-col gap-4 items-center w-full mx-auto">
+        <div className="flex gap-4 w-full justify-center mx-auto">
+          <button
+            className="btn-golden w-40"
+            onClick={() => setShowDatePicker(true)}
+          >
+            Book Now
+          </button>
+          <button
+            className="btn-outline w-40"
+            onClick={() => setShowDatePicker(false)}
+          >
+            Go Back
+          </button>
+        </div>
         {showDatePicker && (
-          <div className="date-picker-container">
-            <DatePicker
-              className="detail-search-field"
-              selected={checkInDate}
-              onChange={(date) => setCheckInDate(date)}
-              selectsStart
-              startDate={checkInDate}
-              endDate={checkOutDate}
-              placeholderText="Check-in Date"
-              dateFormat="dd/MM/yyyy"
-              // dateFormat="yyyy-MM-dd"
-            />
-            <DatePicker
-              className="detail-search-field"
-              selected={checkOutDate}
-              onChange={(date) => setCheckOutDate(date)}
-              selectsEnd
-              startDate={checkInDate}
-              endDate={checkOutDate}
-              minDate={checkInDate}
-              placeholderText="Check-out Date"
-              // dateFormat="yyyy-MM-dd"
-              dateFormat="dd/MM/yyyy"
-            />
-
-            <div className="guest-container">
-              <div className="guest-div">
-                <label>Adults:</label>
-                <input
-                  type="number"
-                  min="1"
-                  value={numAdults}
-                  onChange={(e) => setNumAdults(parseInt(e.target.value))}
-                />
-              </div>
-              <div className="guest-div">
-                <label>Children:</label>
-                <input
-                  type="number"
-                  min="0"
-                  value={numChildren}
-                  onChange={(e) => setNumChildren(parseInt(e.target.value))}
-                />
+          <div className="date-picker-container bg-charcoal-900 border border-gold-400/20 rounded shadow-elegant p-6 mt-4 w-full max-w-md mx-auto flex flex-col items-center">
+            <div className="flex flex-col gap-4 w-full">
+              <DatePicker
+                className="form-input"
+                selected={checkInDate}
+                onChange={(date) => setCheckInDate(date)}
+                selectsStart
+                startDate={checkInDate}
+                endDate={checkOutDate}
+                placeholderText="Check-in Date"
+                dateFormat="dd/MM/yyyy"
+              />
+              <DatePicker
+                className="form-input"
+                selected={checkOutDate}
+                onChange={(date) => setCheckOutDate(date)}
+                selectsEnd
+                startDate={checkInDate}
+                endDate={checkOutDate}
+                minDate={checkInDate}
+                placeholderText="Check-out Date"
+                dateFormat="dd/MM/yyyy"
+              />
+              <div className="guest-container flex gap-4 w-full">
+                <div className="guest-div flex-1">
+                  <label className="form-label">Adults:</label>
+                  <input
+                    type="number"
+                    min="1"
+                    value={numAdults}
+                    onChange={(e) => setNumAdults(parseInt(e.target.value))}
+                    className="form-input"
+                  />
+                </div>
+                <div className="guest-div flex-1">
+                  <label className="form-label">Children:</label>
+                  <input
+                    type="number"
+                    min="0"
+                    value={numChildren}
+                    onChange={(e) => setNumChildren(parseInt(e.target.value))}
+                    className="form-input"
+                  />
+                </div>
               </div>
               <button
-                className="confirm-booking"
+                className="btn-golden w-full mt-2"
                 onClick={handleConfirmBooking}
+                type="button"
               >
                 Confirm Booking
               </button>
@@ -259,10 +261,10 @@ const RoomDetailsPage = () => {
           </div>
         )}
         {totalPrice > 0 && (
-          <div className="total-price">
-            <p>Total Price: ฿{convertToTHB(totalPrice)}</p>
-            <p>Total Guests: {totalGuests}</p>
-            <button onClick={acceptBooking} className="accept-booking">
+          <div className="total-price bg-charcoal-900 border border-gold-400/20 rounded shadow-elegant p-6 mt-4 w-full max-w-md mx-auto text-center">
+            <p className="text-gold-400 font-semibold text-lg">Total Price: ฿{convertToTHB(totalPrice)}</p>
+            <p className="text-white/80 mb-4">Total Guests: {totalGuests}</p>
+            <button onClick={acceptBooking} className="btn-golden w-full text-base font-bold py-3">
               Accept Booking
             </button>
           </div>
